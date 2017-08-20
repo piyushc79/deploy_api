@@ -24,7 +24,7 @@ SECRET_KEY = 'oi1+cyk&9g-n*nyiymkjzt6-es@!g7=edzpx+--rdsj4kw&4&3'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -103,16 +103,10 @@ USE_L10N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/1.8/howto/static-files/
-# Static asset configuration
-# Allow all host hosts/domain names for this site
-ALLOWED_HOSTS = ['rocky-stream-99026.herokuapp.com']
-
 # Srse database configuration from $DATABASE_URL
-import dj_database_url
+# import dj_database_url
 
-DATABASES = {'default': dj_database_url.config()}
+# DATABASES = {'default': dj_database_url.config()}
 
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
