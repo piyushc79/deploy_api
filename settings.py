@@ -37,9 +37,8 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # Local Apps
-    'blog',
-    # Third party apps
-    'django_forms_bootstrap',
+    'company_details',
+    'deploy_api',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -110,12 +109,6 @@ USE_TZ = True
 
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-
-# try to load development_settings.py if exists
-try:
-    from .development_settings import *
-except Exception, e:
-    pass
 
 import os
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
