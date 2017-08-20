@@ -107,7 +107,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 # Static asset configuration
 # Allow all host hosts/domain names for this site
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['rocky-stream-99026.herokuapp.com']
 
 # Srse database configuration from $DATABASE_URL
 import dj_database_url
@@ -127,7 +127,8 @@ import os
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 # STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-STATIC_ROOT = '/static_root/'
+# STATIC_ROOT = '/static_root/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = (
