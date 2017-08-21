@@ -108,7 +108,7 @@ class Company(models.Model):
         else:
             payload['social_info'] = {}
 
-        payload['profile_id'] = 'cms::profile::{}'.format(str(uuid.uuid1()))
+        payload['id'] = 'cms::profile::{}'.format(str(uuid.uuid1()))
 
         try:
             created_object = Company(**payload)
