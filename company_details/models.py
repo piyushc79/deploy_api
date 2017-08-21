@@ -2,6 +2,7 @@ import datetime
 import re
 import uuid
 
+from django.core.exceptions import MultipleObjectsReturned
 from django.db import models
 from jsonfield import JSONField
 
@@ -52,6 +53,12 @@ class Company(models.Model):
 
         if not payload.get('name'):
             return False, 'Cannot create company without name.', {}
+
+        try:
+            Company.objects.get(name=payload.get('name'))
+        except (Company.DoesNotExist, MultipleObjectsReturned):
+            return False, 'Company already exists for' \
+                          ' requested name {}.'.format(payload.get('name')), {}
 
         investor = None
         if payload.get('investor'):
