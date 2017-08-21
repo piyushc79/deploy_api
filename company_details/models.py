@@ -10,7 +10,6 @@ from .app_settings import COMPANY_KEYS, DATE_FORMATS, STAGES, WEBSITE_REGEX
 
 class Company(models.Model):
     objects = models.Manager()
-    id = models.CharField(max_length=200)
     created_at = models.DateTimeField(auto_now_add=True, db_index=True)
     updated_at = models.DateTimeField(auto_now=True)
     name = models.CharField(
