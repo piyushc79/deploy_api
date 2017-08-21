@@ -57,7 +57,9 @@ class Company(models.Model):
         else:
             try:
                 Company.objects.get(name=payload.get('name'))
-            except (Company.DoesNotExist, MultipleObjectsReturned):
+            except Company.DoesNotExist:
+                pass
+            except MultipleObjectsReturned:
                 return False, 'Company already exists for' \
                               ' requested name {}.'.format(payload.get('name')), {}
 
