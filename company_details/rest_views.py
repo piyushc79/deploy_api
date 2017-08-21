@@ -15,7 +15,7 @@ class ManageCompany(viewsets.ViewSet):
         """
         response = {'success': True, 'error': None, 'data': {}}
         st = status.HTTP_200_OK
-        success, error, data = Company.create_from_api(request.DATA)
+        success, error, data = Company.create_from_api(request.data)
 
         # if created 200, else 400
         if not success:
