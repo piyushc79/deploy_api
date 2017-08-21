@@ -29,11 +29,12 @@ class Company(models.Model):
     logo_url = models.CharField(
         max_length=500, null=True, blank=True)
     social_info = JSONField(null=True, blank=True, default='{}')
+    profile_id = models.CharField(max_length=200, unique=True)
 
     def save(self, *args, **kwargs):
 
-        if not self.id:
-            self.id = 'cms::profile::{}'.format(str(uuid.uuid1()))
+        if not self.profile_id:
+            self.profile_id = 'cms::profile::{}'.format(str(uuid.uuid1()))
 
         super(Company, self).save(*args, **kwargs)
 
@@ -108,7 +109,7 @@ class Company(models.Model):
         else:
             payload['social_info'] = {}
 
-        payload['id'] = 'cms::profile::{}'.format(str(uuid.uuid1()))
+        payload['profile_id'] = 'cms::profile::{}'.format(str(uuid.uuid1()))
 
         try:
             created_object = Company(**payload)
