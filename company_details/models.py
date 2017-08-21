@@ -10,6 +10,7 @@ from .app_settings import COMPANY_KEYS, DATE_FORMATS, STAGES, WEBSITE_REGEX
 
 class Company(models.Model):
     objects = models.Manager()
+    id = models.CharField(max_length=200)
     created_at = models.DateTimeField(auto_now_add=True, db_index=True)
     updated_at = models.DateTimeField(auto_now=True)
     name = models.CharField(
@@ -25,13 +26,14 @@ class Company(models.Model):
         help_text='Funding Stage')
     website = models.CharField(
         max_length=500, null=True, blank=True)
+    logo_url = models.CharField(
+        max_length=500, null=True, blank=True)
     social_info = JSONField(null=True, blank=True, default='{}')
-    profile_id = models.CharField(max_length=200)
 
     def save(self, *args, **kwargs):
 
-        if not self.profile_id:
-            self.profile_id = 'cms::profile::{}'.format(str(uuid.uuid1()))
+        if not self.id:
+            self.id = 'cms::profile::{}'.format(str(uuid.uuid1()))
 
         super(Company, self).save(*args, **kwargs)
 
@@ -106,8 +108,7 @@ class Company(models.Model):
         else:
             payload['social_info'] = {}
 
-        profile_id = 'cms::profile::{}'.format(str(uuid.uuid1()))
-        payload['profile_id'] = profile_id
+        payload['profile_id'] = 'cms::profile::{}'.format(str(uuid.uuid1()))
 
         try:
             created_object = Company(**payload)
