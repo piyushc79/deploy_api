@@ -46,7 +46,8 @@ class ManageCompany(viewsets.ViewSet):
             return Response(data=response, status=status.HTTP_400_BAD_REQUEST)
 
         try:
-            response['data'] = CompanySerializer(company)
+            serialized_obj = CompanySerializer(company)
+            response['data'] = serialized_obj.data
         except Exception as e:
             response['error'] = 'Error: {}'.format(e)
             response['success'] = False
