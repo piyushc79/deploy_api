@@ -113,7 +113,7 @@ class Company(models.Model):
             created_object = Company(**payload)
             created_object.save()
         except Exception as e:
-            return False, 'Error while company creation: {}'.format(e.message), {}
+            return False, 'Error while company creation: {}'.format(e), {}
 
         # Cyclic import
         from .serializer import CompanySerializer
