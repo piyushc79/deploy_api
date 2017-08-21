@@ -1,8 +1,10 @@
+from django.core.exceptions import MultipleObjectsReturned
 from rest_framework import status, viewsets
 from rest_framework.response import Response
 
 
 from .models import Company
+from .serializer import CompanySerializer
 
 
 class ManageCompany(viewsets.ViewSet):
@@ -11,7 +13,7 @@ class ManageCompany(viewsets.ViewSet):
     """
     def create_company(self, request, format=None):
         """
-        View for creating a center
+        API for creating a center
         """
         response = {'success': True, 'error': None, 'data': {}}
         st = status.HTTP_200_OK
@@ -26,3 +28,28 @@ class ManageCompany(viewsets.ViewSet):
             response['data'] = data
 
         return Response(data=response, status=st)
+
+    def fetch_company(self, request, profile_id):
+        """
+        API for fetching a center
+        """
+        response = {'success': True, 'error': None, 'data': {}}
+        try:
+            company = Company.objects.get(profile_id=profile_id)
+        except Company.DoesNotExist:
+            response['error'] = 'Company does not exists for  given profile_id.'
+            response['success'] = False
+            return Response(data=response, status=status.HTTP_400_BAD_REQUEST)
+        except MultipleObjectsReturned:
+            response['error'] = 'Multiple companies exists for  given profile_id.'
+            response['success'] = False
+            return Response(data=response, status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            response['data'] = CompanySerializer(company)
+        except Exception as e:
+            response['error'] = 'Error: {}'.format(e)
+            response['success'] = False
+            return Response(data=response, status=status.HTTP_400_BAD_REQUEST)
+
+        return Response(data=response, status=status.HTTP_200_OK)

@@ -4,7 +4,7 @@ from . import rest_views
 
 
 urlpatterns = patterns('',
-    # url(r'fetch/(?P<profile_id>.+)$', rest_views.ManageCompany.as_view({"get": "get_data"}), name='company_info'),
+    url(r'fetch/(?P<profile_id>.+)$', rest_views.ManageCompany.as_view({"get": "fetch_company"}), name='company_info'),
     url(r'^create/$', rest_views.ManageCompany.as_view({'post': 'create_company'}), name='company_creation'),
 
 )

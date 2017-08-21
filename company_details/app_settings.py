@@ -1,6 +1,6 @@
 COMPANY_KEYS = ['name', 'founded_at', 'description', 'funding_amount',
                 'funding_date', 'investor', 'funding_stage', 'website',
-                'social_info']
+                'social_info', 'logo_url']
 
 DATE_FORMATS = [
     '%d-%m-%y',
