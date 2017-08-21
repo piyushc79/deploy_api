@@ -61,10 +61,12 @@ class Company(models.Model):
 
         if investor:
             payload['investor'] = investor
+        else:
+            payload['investor'] = None
 
         for dt in ['founded_at', 'funding_date']:
             if payload.get(dt):
-                if isinstance(payload.get('funding_date'), datetime.datetime):
+                if not isinstance(payload.get('funding_date'), datetime.datetime):
                     date = None
                     for df in DATE_FORMATS:
                         try:
@@ -75,23 +77,34 @@ class Company(models.Model):
                             continue
                     if date:
                         payload[dt] = date
+            else:
+                payload[dt] = None
 
         if payload.get('funding_amount'):
             try:
                 funding_amount = float(payload.get('funding_amount'))
             except ValueError:
                 return False, 'Incorrect funding_amount.'.format(payload.get('funding_amount')), {}
+        else:
+            funding_amount = 0.0
+        payload['funding_amount'] = funding_amount
 
         if payload.get('funding_stage') and payload.get('funding_stage') not in STAGES:
             return False, 'Incorrect Funding Stage.'.format(payload.get('funding_stage')), {}
+        else:
+            payload['funding_stage'] = None
 
         if payload.get('website'):
             web_pattern = re.compile(WEBSITE_REGEX)
             if not web_pattern.match(payload.get('website')):
                 return False, 'Incorrect website.'.format(payload.get('website')), {}
+        else:
+            payload['website'] = None
 
         if payload.get('social_info') and not isinstance(payload.get('social_info'), dict):
             return False, 'Incorrect social_info format.'.format(payload.get('social_info')), {}
+        else:
+            payload['social_info'] = {}
 
         profile_id = 'cms::profile::{}'.format(str(uuid.uuid1()))
         payload['profile_id'] = profile_id
