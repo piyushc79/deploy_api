@@ -22,5 +22,7 @@ class ManageCompany(viewsets.ViewSet):
             response['success'] = False
             response['error'] = error
             st = status.HTTP_400_BAD_REQUEST
+        else:
+            response['data'] = data
 
         return Response(data=response, status=st)
